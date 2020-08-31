@@ -11,7 +11,6 @@ import pl.skowronski.addboardapp.category.CategoryRepository;
 import pl.skowronski.addboardapp.user.User;
 import pl.skowronski.addboardapp.user.UserRepository;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -68,16 +67,16 @@ public class AdvertisementController {
 
     @GetMapping("/add/create")
     public String createAddForm(Model model){
-        model.addAttribute("advert", new Advertisement());
+        model.addAttribute("advertisement", new Advertisement());
         return "createForm";
     }
 
-    /*@PostMapping("/add/create")
-    public String crateAdd(@Valid Advertisement advert, BindingResult result, Model model){
+    @PostMapping("/add/create")
+    public String crateAdd(@Valid Advertisement advertisement, BindingResult result, Model model){
         if (result.hasErrors()) {
-            model.addAttribute("message", "Popraw błędy!");
+            model.addAttribute("message", "Popraw błędy w formularzu!");
             return "register";
-        }else {
+        } else {
             String email;
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (principal instanceof UserDetails) {
@@ -86,10 +85,10 @@ public class AdvertisementController {
                 email = principal.toString();
             }
             User user = userRepository.findByEmail(email).get();
-            advert.setUser(user);
-            advertisementRepository.save(advert);
-            return "create"
+            advertisement.setUser(user);
+            model.addAttribute("message", "Dodano ogłoszenie!");
+            advertisementRepository.save(advertisement);
+            return "createForm";
         }
-        return "createForm";
-    }*/
+    }
 }

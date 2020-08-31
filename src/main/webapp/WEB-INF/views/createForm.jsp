@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form"
            uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>Dodaj ogłoszenie</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -20,7 +21,7 @@
           rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href='<c:url value="/css/sb-admin-2.css"/>' rel="stylesheet">
 
 </head>
 
@@ -36,10 +37,10 @@
                 <div class="col-lg-7">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Utwórz konto!</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Dodaj ogłoszenie!</h1>
                         </div>
                         <form:form cssClass="user" method="post"
-                                   modelAttribute="advert">
+                                   modelAttribute="advertisement">
                             <div class="form-group">
                                 <form:input path="title" type="text" class="form-control form-control-user"
                                             placeholder="Tytuł"/>
@@ -64,7 +65,7 @@
                         <span><h3>${message}</h3><br></span>
 
                         <div class="text-center">
-                            <a class="small" href="/login">Masz już konto? Zaloguj się!</a>
+                            <a class="small" href="/home">Wróć do panelu użytkownika</a>
                         </div>
                     </div>
                 </div>

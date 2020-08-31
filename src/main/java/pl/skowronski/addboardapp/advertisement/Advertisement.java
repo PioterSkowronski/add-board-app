@@ -5,8 +5,6 @@ import pl.skowronski.addboardapp.category.Category;
 import pl.skowronski.addboardapp.user.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,13 +14,9 @@ public class Advertisement {
     @Id
     @GeneratedValue(strategy =
             GenerationType.IDENTITY)
-    private Long id;
-    @NotBlank(message = "Tytuł jest wymagany")
+    private long id;
     private String title;
-    @NotBlank(message = "Opis jest wymagany")
-    @Length(min=3, max=1500)
     private String description;
-    @NotNull(message = "Cena jest wymagana")
     private double price;
     private LocalDateTime created;
     @ManyToOne
