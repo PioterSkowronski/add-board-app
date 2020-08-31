@@ -1,14 +1,19 @@
 package pl.skowronski.addboardapp.advertisement;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import pl.skowronski.addboardapp.category.Category;
 import pl.skowronski.addboardapp.category.CategoryRepository;
 import pl.skowronski.addboardapp.user.User;
 import pl.skowronski.addboardapp.user.UserRepository;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,14 +30,66 @@ public class AdvertisementController {
         this.userRepository = userRepository;
     }
 
+    @ModelAttribute("categories")
+    public List<Category> categories() {
+        return this.categoryRepository.findAll();
+    }
+
     @RequestMapping("adds/{id}")
-    public String showAdd(@PathVariable Integer id, Model model){
+    public String showAdd(@PathVariable Long id, Model model) {
         Optional<Advertisement> add = advertisementRepository.findById(id);
-        if(!add.isPresent()){
+        if (!add.isPresent()) {
             return "redirect:/";
         }
         Advertisement advert = add.get();
         model.addAttribute("advert", advert);
         return "showAdd";
     }
+
+    @GetMapping("/edit")
+    public String editAdd(@RequestParam long id, Model model){
+        Advertisement advert = advertisementRepository.findById(id).get();
+        model.addAttribute("advert", advert);
+        return "editForm";
+    }
+
+    /*@PostMapping("/add/edit")
+    public String confirmEdit(@Valid Advertisement advert, BindingResult result, Model model) {
+        System.out.println(advert.toString());
+        if (result.hasErrors()) {
+            model.addAttribute("message", "Popraw błędy!");
+            return "register";
+        } else {
+            model.addAttribute("message", "Ogłoszenie zostało zaktualizowane!");
+            advertisementRepository.save(advert);
+        }
+        return "editForm";
+    }*/
+
+    @GetMapping("/add/create")
+    public String createAddForm(Model model){
+        model.addAttribute("advert", new Advertisement());
+        return "createForm";
+    }
+
+    /*@PostMapping("/add/create")
+    public String crateAdd(@Valid Advertisement advert, BindingResult result, Model model){
+        if (result.hasErrors()) {
+            model.addAttribute("message", "Popraw błędy!");
+            return "register";
+        }else {
+            String email;
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof UserDetails) {
+                email = ((UserDetails) principal).getUsername();
+            } else {
+                email = principal.toString();
+            }
+            User user = userRepository.findByEmail(email).get();
+            advert.setUser(user);
+            advertisementRepository.save(advert);
+            return "create"
+        }
+        return "createForm";
+    }*/
 }

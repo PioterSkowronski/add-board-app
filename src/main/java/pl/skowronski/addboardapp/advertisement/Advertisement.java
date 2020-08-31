@@ -1,9 +1,12 @@
 package pl.skowronski.addboardapp.advertisement;
 
+import org.hibernate.validator.constraints.Length;
 import pl.skowronski.addboardapp.category.Category;
 import pl.skowronski.addboardapp.user.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,15 +16,13 @@ public class Advertisement {
     @Id
     @GeneratedValue(strategy =
             GenerationType.IDENTITY)
-    private Integer id;
-    @Column(length=100,
-            nullable = false)
+    private Long id;
+    @NotBlank(message = "Tytuł jest wymagany")
     private String title;
-    @Column(length=1500,
-            nullable = false)
+    @NotBlank(message = "Opis jest wymagany")
+    @Length(min=3, max=1500)
     private String description;
-    @Column(scale = 2,
-            nullable = false)
+    @NotNull(message = "Cena jest wymagana")
     private double price;
     private LocalDateTime created;
     @ManyToOne
@@ -35,13 +36,15 @@ public class Advertisement {
     }
 
     @PreUpdate
-    public void preUpdate() { created = LocalDateTime.now(); }
+    public void preUpdate() {
+        created = LocalDateTime.now();
+    }
 
     public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

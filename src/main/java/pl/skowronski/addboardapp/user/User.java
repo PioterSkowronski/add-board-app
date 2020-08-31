@@ -1,7 +1,13 @@
 package pl.skowronski.addboardapp.user;
 
 
+import org.hibernate.validator.constraints.Length;
+import pl.skowronski.addboardapp.Role.Role;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -11,27 +17,25 @@ public class User {
     @GeneratedValue(strategy =
             GenerationType.IDENTITY)
     private long id;
-    @Column(length=100,
-            nullable = false)
+    @NotBlank(message = "Imię jest wymagane")
     private String firstName;
-    @Column(length=100,
-            nullable = false)
+    @NotBlank(message = "Nazwisko jest wymagane")
     private String lastName;
-    @Column(length=100,
-            nullable = false)
+    @NotBlank(message = "Podaj hasło")
+    @Length(min = 5, message = "Hasło musi składać się z co najmniej 5 znaków")
     private String password;
-    @Column(length=100,
-            nullable = false,
-            unique = true)
+    @NotBlank(message = "Nazwa użytkownika jest wymagana")
     private String userName;
-    @Column(length=18,
-            nullable = false,
-            unique = true)
+    @Length(min = 9, max = 18, message = "Numer telefonu powinien zawierać od 9 do 18 znaków")
     private String phoneNumber;
-    @Column(length=100,
-            nullable = false,
-            unique = true)
+    @Email(message = "Email nieprawidłowy")
+    @NotBlank(message = "Email jest wymagany")
     private String email;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<Role> roles;
+
+    private String status;
 
     public long getId() {
         return id;
@@ -79,6 +83,30 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

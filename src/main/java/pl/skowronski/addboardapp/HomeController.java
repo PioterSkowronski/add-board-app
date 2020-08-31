@@ -3,10 +3,14 @@ package pl.skowronski.addboardapp;
 import org.dom4j.rule.Mode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import pl.skowronski.addboardapp.advertisement.Advertisement;
 import pl.skowronski.addboardapp.advertisement.AdvertisementRepository;
 import pl.skowronski.addboardapp.category.Category;
@@ -17,6 +21,7 @@ import pl.skowronski.addboardapp.user.UserRepository;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -37,40 +42,43 @@ public class HomeController {
     @RequestMapping("/")
     public String home(Model model) {
         List<Advertisement> adverts = advertisementRepository.findAll();
+        for (Advertisement advert : adverts) {
+        }
         List<Category> categories = categoryRepository.findAll();
         List<User> users = userRepository.findAll();
-        List<String> cats = (List<String>)model.getAttribute("category");
+        List<String> cats = (List<String>) model.getAttribute("category");
+        logger.debug("wypisz coś");
         model.addAttribute("adverts", adverts);
         model.addAttribute("categories", categories);
-        return "adada";
+        return "landingPage";
     }
 
     @PostMapping("/")
-    public String homeFiltered(HttpServletRequest request, Model model){
+    public String homeFiltered(HttpServletRequest request, Model model) {
         List<Advertisement> adverts = advertisementRepository.findAll();
         List<Category> categories = categoryRepository.findAll();
         List<User> users = userRepository.findAll();
-        String minStr = request.getParameter("min");
-        logger.debug("minStr: " + minStr);
-        Double min = 0.00;
-        Double max = 0.00;
-        if(minStr.equals(null)){
-            min = 0.00;
-        } else {
-            min = Double.parseDouble(minStr);
+        String minimum = request.getParameter("min");
+        String maximum = request.getParameter("max");
+        double min = 0;
+        double max = 1000000;
+
+        if(!minimum.equals("")){
+            min= Double.parseDouble(minimum);
         }
-        String maxStr = request.getParameter("max");
-        if(maxStr.equals(null)){
-            max = 10000000.00;
-        } else {
-            max = Double.parseDouble(maxStr);
+
+        if(!maximum.equals("")){
+            max = Double.parseDouble(maximum);
         }
-        if(min > max){
+
+        if (min > max) {
             double tmp;
             tmp = min;
             min = max;
             max = tmp;
         }
+        System.out.println("min: " + min);
+        System.out.println("max: " + max);
         final double min1 = min;
         final double max1 = max;
         String[] cats = request.getParameterValues("category");
@@ -79,6 +87,41 @@ public class HomeController {
         model.addAttribute("adverts", adds);
         model.addAttribute("categories", categories);
         model.addAttribute("categoryList", categoryList);
-        return "adada";
+        model.addAttribute("min", min);
+        model.addAttribute("max", max);
+        return "filteredList";
+    }
+
+    @GetMapping("/home")
+    public String homePage(Model model) {
+        String email;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails) principal).getUsername();
+        } else {
+            email = principal.toString();
+        }
+        User user = userRepository.findByEmail(email).get();
+        List<Advertisement> adverts = advertisementRepository.findAllByUser(user);
+        model.addAttribute("user", user);
+        model.addAttribute("adverts", adverts);
+        return "home";
+    }
+
+    @GetMapping("/admin")
+    public String adminPage(){
+        return "admin";
+    }
+
+    @GetMapping("/boot")
+    public String boot(Model model){
+        List<Advertisement> adverts = advertisementRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
+        List<User> users = userRepository.findAll();
+        List<String> cats = (List<String>) model.getAttribute("category");
+        logger.debug("wypisz coś");
+        model.addAttribute("adverts", adverts);
+        model.addAttribute("categories", categories);
+        return "bootstrap";
     }
 }
