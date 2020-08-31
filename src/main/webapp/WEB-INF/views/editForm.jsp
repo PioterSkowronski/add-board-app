@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>Edycja ogłoszenia</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -36,10 +36,10 @@
                 <div class="col-lg-7">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Utwórz konto!</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Wprowadź zmiany!</h1>
                         </div>
                         <form:form cssClass="user" method="post"
-                                   modelAttribute="advert">
+                                   modelAttribute="advertisement">
                             <div class="form-group">
                                 <form:input path="title" type="text" class="form-control form-control-user"
                                             placeholder="Tytuł"/>
@@ -57,8 +57,6 @@
                             </div>
                             <div class="form-group">
                                 <form:select itemValue="id" itemLabel="name" path="category" items="${categories}" class="form-control form-control-user"/>
-                                <%--<form:select itemValue="id" itemLabel="name"
-                                             path="publisher.id" items="${publishers}"--%>
                             </div>
                             <input type="submit" value="Zapisz zmiany" class="btn btn-primary btn-user btn-block">
 
@@ -66,7 +64,7 @@
                         <span><h3>${message}</h3><br></span>
 
                         <div class="text-center">
-                            <a class="small" href="/login">Masz już konto? Zaloguj się!</a>
+                            <a class="small" href="/home">Wróć do panelu użytkownika</a>
                         </div>
                     </div>
                 </div>
