@@ -1,10 +1,13 @@
-package pl.skowronski.addboardapp.user;
+package pl.skowronski.addboardapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.skowronski.addboardapp.Role.Role;
-import pl.skowronski.addboardapp.Role.RoleRepository;
+import pl.skowronski.addboardapp.model.Role;
+import pl.skowronski.addboardapp.repository.RoleRepository;
+import pl.skowronski.addboardapp.model.User;
+import pl.skowronski.addboardapp.repository.UserRepository;
+import pl.skowronski.addboardapp.service.UserService;
 
 import java.util.Arrays;
 import java.util.HashSet;

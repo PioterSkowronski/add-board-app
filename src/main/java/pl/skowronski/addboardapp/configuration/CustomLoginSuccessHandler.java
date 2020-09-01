@@ -1,4 +1,4 @@
-package pl.skowronski.addboardapp;
+package pl.skowronski.addboardapp.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;

@@ -1,4 +1,4 @@
-package pl.skowronski.addboardapp;
+package pl.skowronski.addboardapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,9 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.skowronski.addboardapp.user.User;
-import pl.skowronski.addboardapp.user.UserRepository;
-import pl.skowronski.addboardapp.user.UserService;
+import pl.skowronski.addboardapp.model.User;
+import pl.skowronski.addboardapp.repository.UserRepository;
+import pl.skowronski.addboardapp.service.UserService;
 
 import javax.validation.Valid;
 

@@ -1,7 +1,8 @@
-package pl.skowronski.addboardapp.user;
+package pl.skowronski.addboardapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import pl.skowronski.addboardapp.model.User;
 
 import java.util.Optional;
 

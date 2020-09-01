@@ -1,4 +1,4 @@
-package pl.skowronski.addboardapp.advertisement;
+package pl.skowronski.addboardapp.controller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,10 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.skowronski.addboardapp.category.Category;
-import pl.skowronski.addboardapp.category.CategoryRepository;
-import pl.skowronski.addboardapp.user.User;
-import pl.skowronski.addboardapp.user.UserRepository;
+import pl.skowronski.addboardapp.model.Advertisement;
+import pl.skowronski.addboardapp.repository.AdvertisementRepository;
+import pl.skowronski.addboardapp.service.AdvertisementService;
+import pl.skowronski.addboardapp.model.Category;
+import pl.skowronski.addboardapp.repository.CategoryRepository;
+import pl.skowronski.addboardapp.model.User;
+import pl.skowronski.addboardapp.repository.UserRepository;
 
 import javax.validation.Valid;
 import java.util.List;

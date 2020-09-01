@@ -1,4 +1,4 @@
-package pl.skowronski.addboardapp.Role;
+package pl.skowronski.addboardapp.model;
 
 import javax.persistence.*;
 

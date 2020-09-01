@@ -1,14 +1,7 @@
-package pl.skowronski.addboardapp.advertisement;
-
-import org.hibernate.validator.constraints.Length;
-import pl.skowronski.addboardapp.category.Category;
-import pl.skowronski.addboardapp.user.User;
+package pl.skowronski.addboardapp.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Entity

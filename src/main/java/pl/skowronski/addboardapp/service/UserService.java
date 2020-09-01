@@ -1,4 +1,6 @@
-package pl.skowronski.addboardapp.user;
+package pl.skowronski.addboardapp.service;
+
+import pl.skowronski.addboardapp.model.User;
 
 public interface UserService {
 
