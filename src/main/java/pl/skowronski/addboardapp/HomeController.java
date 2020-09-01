@@ -7,10 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import pl.skowronski.addboardapp.advertisement.Advertisement;
 import pl.skowronski.addboardapp.advertisement.AdvertisementRepository;
 import pl.skowronski.addboardapp.category.Category;
@@ -47,7 +44,6 @@ public class HomeController {
         List<Category> categories = categoryRepository.findAll();
         List<User> users = userRepository.findAll();
         List<String> cats = (List<String>) model.getAttribute("category");
-        logger.debug("wypisz coś");
         model.addAttribute("adverts", adverts);
         model.addAttribute("categories", categories);
         return "landingPage";
@@ -124,4 +120,13 @@ public class HomeController {
         model.addAttribute("categories", categories);
         return "bootstrap";
     }
+
+    @RequestMapping("/search")
+    public String showSearchedContent(@RequestParam String value, Model model){
+        List<Advertisement> adverts = advertisementRepository.findByContent(value);
+        model.addAttribute("adverts",adverts);
+        return "searchPage";
+    }
+
+
 }

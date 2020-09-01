@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"
            uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -14,14 +13,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>Tablica ogłoszeń</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href='<c:url value="/css/sb-admin-2.min.css"/>' rel="stylesheet">
+    <link href='<c:url value="/css/sb-admin-2.css"/>' rel="stylesheet">
 
 </head>
 
@@ -47,11 +46,19 @@
         <!-- Nav Item - Dashboard -->
 <sec:authorize access="!isAuthenticated()">
         <li class="nav-item">
-            <a class="nav-link" href="/login">
+            <a class="nav-link" href='<c:url value="/login" />'/>
+
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Zaloguj się</span></a>
         </li>
 </sec:authorize>
+        <sec:authorize url="/admin">
+            <li class="nav-item">
+                <a class="nav-link" href='<c:url value="/admin"/>'>
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Panel administratora</span></a>
+            </li>
+        </sec:authorize>
 
         <!-- Divider -->
         <hr class="sidebar-divider">
@@ -150,7 +157,7 @@
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="/home">
+                            <a class="dropdown-item" href='<c:url value="/home"/>'/>
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Moje ogłoszenia
                             </a>

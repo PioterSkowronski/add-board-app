@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"
            uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,14 +14,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Tablica ogłoszeń</title>
+    <title>SB Admin 2 - Blank</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href='<c:url value="/css/sb-admin-2.css"/>' rel="stylesheet">
+    <link href='<c:url value="/css/sb-admin-2.min.css"/>' rel="stylesheet">
 
 </head>
 
@@ -44,6 +45,12 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link" href="/">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Powrót do strony głównej</span></a>
+        </li>
+
         <sec:authorize access="!isAuthenticated()">
             <li class="nav-item">
                 <a class="nav-link" href="/login">
@@ -51,32 +58,10 @@
                     <span>Zaloguj się</span></a>
             </li>
         </sec:authorize>
-        <sec:authorize url="/admin">
-            <li class="nav-item">
-                <a class="nav-link" href='<c:url value="/admin"/>'>
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Panel administratora</span></a>
-            </li>
-        </sec:authorize>
 
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Filtr
-        </div>
-        <form id="filter" method="post">
-            <label>  Cena minimalna:</label>
-            <input name="min" value="0">
-            <label>  Cena maksymalna:</label>
-            <input name="max" value="1000000"><br>
-            <label >Kategorie:</label><br>
-            <c:forEach var="category" items="${categories}">
-                <input type="checkbox" name="category" value="${category.name}" Checked>${category.name}<br>
-            </c:forEach><br>
-            <input type="submit" value="Zatwierdź">
-        </form>
 
 
         <!-- Divider -->
@@ -105,13 +90,13 @@
                 </button>
 
                 <!-- Topbar Search -->
-                <form action="/search" method="get" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
-                        <input type="text" name="value" class="form-control bg-light border-0 small" placeholder="Wyszukaj ogłoszenie..." aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Wyszukaj ogłoszenie..." aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
-                            <input class="btn btn-primary" type="submit">
+                            <button class="btn btn-primary" type="button">
                                 <i class="fas fa-search fa-sm"></i>
-                            </input>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -126,13 +111,13 @@
                         </a>
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                            <form class="form-inline mr-auto w-100 navbar-search" action="/search" method="get">
+                            <form class="form-inline mr-auto w-100 navbar-search">
                                 <div class="input-group">
-                                    <input type="text" name="value" class="form-control bg-light border-0 small" placeholder="Wyszukaj ogłoszenie..." aria-label="Search" aria-describedby="basic-addon2">
+                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
-                                        <input class="btn btn-primary" type="submit">
+                                        <button class="btn btn-primary" type="button">
                                             <i class="fas fa-search fa-sm"></i>
-                                        </input>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -172,8 +157,6 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">Wszystkie ogłoszenia: </h1>
-
                 <c:forEach items="${adverts}" var="advert">
                     <br>
                     <p>--------------------------------------------</p>

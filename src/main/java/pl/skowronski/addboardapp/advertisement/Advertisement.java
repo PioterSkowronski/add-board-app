@@ -5,6 +5,10 @@ import pl.skowronski.addboardapp.category.Category;
 import pl.skowronski.addboardapp.user.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,8 +19,11 @@ public class Advertisement {
     @GeneratedValue(strategy =
             GenerationType.IDENTITY)
     private long id;
+    @NotBlank(message = "Tytuł jest wymagany")
     private String title;
+    @NotBlank(message = "Opis ogłoszenia jest wymagany")
     private String description;
+    /*@Pattern(regexp = "[0-9]+\\.[0-9]{2}", message = "Wprowadź liczbę, jako separator użyj kropki")*/
     private double price;
     private LocalDateTime created;
     @ManyToOne

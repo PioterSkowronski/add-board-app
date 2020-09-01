@@ -22,7 +22,7 @@
           rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href='<c:url value="/css/sb-admin-2.css"/>' rel="stylesheet">
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -60,20 +60,24 @@
         <hr class="sidebar-divider">
 
         <!-- Heading -->
-        <div class="sidebar-heading">
-            Filtr
-        </div>
-        <form id="filter" method="post">
-            <label> Cena minimalna:</label>
-            <input name="min" value="0">
-            <label> Cena maksymalna:</label>
-            <input name="max" value="1000000"><br>
-            <label>Kategorie:</label><br>
-            <c:forEach var="category" items="${categories}">
-                <input type="checkbox" name="category" value="${category.name}" Checked>${category.name}<br>
-            </c:forEach><br>
-            <input type="submit" value="Zatwierdź">
-        </form>
+        <li class="nav-item">
+            <a class="nav-link" href='<c:url value="/"/>'>
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Strona główna</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href='<c:url value="/add/create"/>'>
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Dodaj ogłoszenie</span></a>
+        </li>
+        <sec:authorize url="/admin">
+        <li class="nav-item">
+            <a class="nav-link" href='<c:url value="/admin"/>'>
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Panel administratora</span></a>
+        </li>
+        </sec:authorize>
 
 
         <!-- Divider -->
