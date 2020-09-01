@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 import pl.skowronski.addboardapp.Role.Role;
 import pl.skowronski.addboardapp.Role.RoleRepository;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
 
 @Service
+@Transactional
 public class UserServiceJpa implements UserService {
 
 
@@ -29,8 +31,4 @@ public class UserServiceJpa implements UserService {
         userRepository.save(user);
     }
 
-    @Override
-    public boolean isUserAlreadyPresent(User user) {
-        return false;
-    }
 }

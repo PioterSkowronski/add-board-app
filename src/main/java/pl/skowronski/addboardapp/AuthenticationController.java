@@ -1,24 +1,35 @@
 package pl.skowronski.addboardapp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.BeanDefinitionDsl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import pl.skowronski.addboardapp.Role.Role;
+import pl.skowronski.addboardapp.Role.RoleRepository;
 import pl.skowronski.addboardapp.user.User;
 import pl.skowronski.addboardapp.user.UserRepository;
 import pl.skowronski.addboardapp.user.UserService;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.HashSet;
 
 @Controller
 public class AuthenticationController {
 
     @Autowired
-    UserService userService;
-    @Autowired
     UserRepository userRepository;
+    @Autowired
+    BCryptPasswordEncoder encoder;
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/login")
     public String login() {
