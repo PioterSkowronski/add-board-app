@@ -1,4 +1,6 @@
-package pl.skowronski.addboardapp.advertisement;
+package pl.skowronski.addboardapp.service;
+
+import pl.skowronski.addboardapp.model.Advertisement;
 
 public interface AdvertisementService {
 

@@ -37,7 +37,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href='<c:url value="/"/>'>
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
@@ -60,17 +60,21 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href='<c:url value="/add/create"/>'>
+            <a class="nav-link" href='<c:url value="/admin/users"/>'>
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Zarządzaj użytkownikami</span></a>
         </li>
-        <sec:authorize url="/admin">
-            <li class="nav-item">
-                <a class="nav-link" href='<c:url value="/admin"/>'>
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Zarządzaj ogłoszeniami</span></a>
-            </li>
-        </sec:authorize>
+        <li class="nav-item">
+            <a class="nav-link" href='<c:url value="/admin/adds"/>'>
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Zarządzaj ogłoszeniami</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href='<c:url value="/admin/categories"/>'>
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Zarządzaj kategoriami</span></a>
+        </li>
+
 
 
         <!-- Divider -->
@@ -99,14 +103,15 @@
                 </button>
 
                 <!-- Topbar Search -->
-                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <form action="/search" method="get"
+                      class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small"
+                        <input type="text" name="value" class="form-control bg-light border-0 small"
                                placeholder="Wyszukaj ogłoszenie..." aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
+                            <input class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                            </input>
                         </div>
                     </div>
                 </form>
@@ -123,15 +128,15 @@
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                              aria-labelledby="searchDropdown">
-                            <form class="form-inline mr-auto w-100 navbar-search">
+                            <form class="form-inline mr-auto w-100 navbar-search" action="/search" method="get">
                                 <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small"
-                                           placeholder="Search for..." aria-label="Search"
+                                    <input type="text" name="value" class="form-control bg-light border-0 small"
+                                           placeholder="Wyszukaj ogłoszenie..." aria-label="Search"
                                            aria-describedby="basic-addon2">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
+                                        <input class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                        </input>
                                     </div>
                                 </div>
                             </form>
@@ -171,12 +176,36 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
-
-
-                <h1>BOOOOOOODYYYY</h1>
-
-
+                <span><h3>${message}</h3><br></span>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Wszystkie ogłoszenia</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Tytuł</th>
+                                    <th>Cena</th>
+                                    <th>Użytkownik</th>
+                                    <th>Akcja</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${advertisements}" var="advert">
+                                    <tr>
+                                        <td>${advert.title}</td>
+                                        <td>${advert.price} PLN</td>
+                                        <td>${advert.user.userName}</td>
+                                        <td><a href="/admin/advertisement/delete?id=${advert.id}">Usuń</a></td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- /.container-fluid -->
 

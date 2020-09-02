@@ -1,8 +1,9 @@
-package pl.skowronski.addboardapp.advertisement;
+package pl.skowronski.addboardapp.service;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import pl.skowronski.addboardapp.model.Advertisement;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +15,6 @@ public class AdvertisementServiceJpa implements AdvertisementService{
 
     @PersistenceContext
     EntityManager entityManager;
-
 
     @Override
     public void updateAdvertisement(Advertisement advertisement) {

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form"
            uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Edycja ogłoszenia</title>
+    <title>Panel administratora - dodaj kategorię</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -20,7 +21,7 @@
           rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href='<c:url value="/css/sb-admin-2.css"/>' rel="stylesheet">
 
 </head>
 
@@ -36,35 +37,22 @@
                 <div class="col-lg-7">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Wprowadź zmiany!</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Dodaj kategorię!</h1>
                         </div>
                         <form:form cssClass="user" method="post"
-                                   modelAttribute="advertisement">
+                                   modelAttribute="Category">
                             <div class="form-group">
-                                <form:input path="title" type="text" class="form-control form-control-user"
+                                <form:input path="name" type="text" class="form-control form-control-user"
                                             placeholder="Tytuł"/>
-                                <form:errors path="title"/><br>
+                                <form:errors path="name"/><br>
                             </div>
-                            <div class="form-group">
-                                <form:textarea path="description" type="text" class="form-control form-control-user" id="exampleInputEmail"
-                                            placeholder="Opis"/>
-                                <form:errors path="description"/><br>
-                            </div>
-                            <div class="form-group">
-                                <form:input path="price" type="text" pattern="([0-9]+\.[0-9]{2})|([0-9]+)|([0-9]+\.[0-9])" title="Wprowadź liczbę, jako separator użyj kropki" class="form-control form-control-user"
-                                            placeholder="Cena"/>
-                                <form:errors path="price"/><br>
-                            </div>
-                            <div class="form-group">
-                                <form:select itemValue="id" itemLabel="name" path="category" items="${categories}" class="form-control form-control-user"/>
-                            </div>
-                            <input type="submit" value="Zapisz zmiany" class="btn btn-primary btn-user btn-block">
+                            <input type="submit" value="Dodaj" class="btn btn-primary btn-user btn-block">
 
                         </form:form>
                         <span><h3>${message}</h3><br></span>
 
                         <div class="text-center">
-                            <a class="small" href="/home">Wróć do panelu użytkownika</a>
+                            <a class="small" href="/admin/categories">Wróć do listy kategorii</a>
                         </div>
                     </div>
                 </div>

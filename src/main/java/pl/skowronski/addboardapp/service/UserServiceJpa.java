@@ -1,11 +1,15 @@
-package pl.skowronski.addboardapp.user;
+package pl.skowronski.addboardapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.skowronski.addboardapp.Role.Role;
-import pl.skowronski.addboardapp.Role.RoleRepository;
+import pl.skowronski.addboardapp.model.Role;
+import pl.skowronski.addboardapp.repository.RoleRepository;
+import pl.skowronski.addboardapp.model.User;
+import pl.skowronski.addboardapp.repository.UserRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -14,7 +18,8 @@ import java.util.HashSet;
 @Transactional
 public class UserServiceJpa implements UserService {
 
-
+    @PersistenceContext
+    EntityManager entityManager;
     @Autowired
     BCryptPasswordEncoder encoder;
     @Autowired
@@ -29,6 +34,11 @@ public class UserServiceJpa implements UserService {
         Role userRole = roleRepository.findByRole("SITE_USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        entityManager.merge(user);
     }
 
 }

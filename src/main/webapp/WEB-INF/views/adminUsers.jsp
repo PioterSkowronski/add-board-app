@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Panel użytkownika</title>
+    <title>Panel administratora</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -37,7 +37,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href='<c:url value="/"/>'>
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
@@ -48,13 +48,6 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <sec:authorize access="!isAuthenticated()">
-            <li class="nav-item">
-                <a class="nav-link" href="/login">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Zaloguj się</span></a>
-            </li>
-        </sec:authorize>
 
         <!-- Divider -->
         <hr class="sidebar-divider">
@@ -67,17 +60,21 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href='<c:url value="/add/create"/>'>
+            <a class="nav-link" href='<c:url value="/admin/users"/>'>
                 <i class="fas fa-fw fa-folder"></i>
-                <span>Dodaj ogłoszenie</span></a>
+                <span>Zarządzaj użytkownikami</span></a>
         </li>
-        <sec:authorize url="/admin">
         <li class="nav-item">
-            <a class="nav-link" href='<c:url value="/admin"/>'>
+            <a class="nav-link" href='<c:url value="/admin/adds"/>'>
                 <i class="fas fa-fw fa-folder"></i>
-                <span>Panel administratora</span></a>
+                <span>Zarządzaj ogłoszeniami</span></a>
         </li>
-        </sec:authorize>
+        <li class="nav-item">
+            <a class="nav-link" href='<c:url value="/admin/categories"/>'>
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Zarządzaj kategoriami</span></a>
+        </li>
+
 
 
         <!-- Divider -->
@@ -106,9 +103,11 @@
                 </button>
 
                 <!-- Topbar Search -->
-                <form action="/search" method="get" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <form action="/search" method="get"
+                      class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
-                        <input type="text" name="value" class="form-control bg-light border-0 small" placeholder="Wyszukaj ogłoszenie..." aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" name="value" class="form-control bg-light border-0 small"
+                               placeholder="Wyszukaj ogłoszenie..." aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <input class="btn btn-primary" type="submit">
                             <i class="fas fa-search fa-sm"></i>
@@ -122,14 +121,18 @@
 
                     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                     <li class="nav-item dropdown no-arrow d-sm-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-search fa-fw"></i>
                         </a>
                         <!-- Dropdown - Messages -->
-                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                             aria-labelledby="searchDropdown">
                             <form class="form-inline mr-auto w-100 navbar-search" action="/search" method="get">
                                 <div class="input-group">
-                                    <input type="text" name="value" class="form-control bg-light border-0 small" placeholder="Wyszukaj ogłoszenie..." aria-label="Search" aria-describedby="basic-addon2">
+                                    <input type="text" name="value" class="form-control bg-light border-0 small"
+                                           placeholder="Wyszukaj ogłoszenie..." aria-label="Search"
+                                           aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                         <input class="btn btn-primary" type="submit">
                                         <i class="fas fa-search fa-sm"></i>
@@ -173,37 +176,45 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
                 <span><h3>${message}</h3><br></span>
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Twoje ogłoszenia</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Lista użytkowników</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Tytuł</th>
-                                    <th>Cena</th>
+                                    <th>Nazwa użytkownika</th>
+                                    <th>Imię i Nazwisko</th>
+                                    <th>Email</th>
+                                    <th>Numer telefonu</th>
+                                    <th>Status</th>
                                     <th>Akcja</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${adverts}" var="advert">
+                                <c:forEach items="${users}" var="user">
+                                    <c:if test="${user.id!=admin.id}">
                                     <tr>
-                                        <td>${advert.title}</td>
-                                        <td>${advert.price} PLN</td>
-                                        <td><a href="/edit?id=${advert.id}">Edytuj</a>   <a href="/delete?id=${advert.id}">Usuń</a> </td>
+                                        <td>${user.userName}</td>
+                                        <td>${user.firstName} ${user.lastName}</td>
+                                        <td>${user.email}</td>
+                                        <td>${user.phoneNumber}</td>
+                                        <td>${user.status}</td>
+                                        <td><c:if test="${user.status.equals('VERIFIED')}"><a href="/admin/users/status?id=${user.id}">Usuń weryfikację</a></c:if>
+                                            <c:if test="${!user.status.equals('VERIFIED')}"><a href="/admin/users/status?id=${user.id}">Dodaj weryfikację</a></c:if><br>
+                                            <a href="/admin/users/delete?id=${user.id}">Usuń permanentnie</a></td>
                                     </tr>
+                                    </c:if>
                                 </c:forEach>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <!-- /.container-fluid -->
 

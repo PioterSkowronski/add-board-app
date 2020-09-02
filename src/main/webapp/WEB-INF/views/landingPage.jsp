@@ -68,9 +68,9 @@
         </div>
         <form id="filter" method="post">
             <label>  Cena minimalna:</label>
-            <input name="min" value="0">
+            <input name="min" value="0" pattern="([0-9]+\.[0-9]{2})|([0-9]+)|([0-9]+\.[0-9])" title="Wprowadź liczbę, jako separator użyj kropki">
             <label>  Cena maksymalna:</label>
-            <input name="max" value="1000000"><br>
+            <input name="max" value="1000000" pattern="([0-9]+\.[0-9]{2})|([0-9]+)|([0-9]+\.[0-9])" title="Wprowadź liczbę, jako separator użyj kropki"><br>
             <label >Kategorie:</label><br>
             <c:forEach var="category" items="${categories}">
                 <input type="checkbox" name="category" value="${category.name}" Checked>${category.name}<br>

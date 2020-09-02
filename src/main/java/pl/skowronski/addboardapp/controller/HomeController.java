@@ -1,6 +1,5 @@
-package pl.skowronski.addboardapp;
+package pl.skowronski.addboardapp.controller;
 
-import org.dom4j.rule.Mode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,17 +7,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.skowronski.addboardapp.advertisement.Advertisement;
-import pl.skowronski.addboardapp.advertisement.AdvertisementRepository;
-import pl.skowronski.addboardapp.category.Category;
-import pl.skowronski.addboardapp.category.CategoryRepository;
-import pl.skowronski.addboardapp.user.User;
-import pl.skowronski.addboardapp.user.UserRepository;
+import pl.skowronski.addboardapp.model.Advertisement;
+import pl.skowronski.addboardapp.repository.AdvertisementRepository;
+import pl.skowronski.addboardapp.model.Category;
+import pl.skowronski.addboardapp.repository.CategoryRepository;
+import pl.skowronski.addboardapp.model.User;
+import pl.skowronski.addboardapp.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -104,29 +102,10 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/admin")
-    public String adminPage(){
-        return "admin";
-    }
-
-    @GetMapping("/boot")
-    public String boot(Model model){
-        List<Advertisement> adverts = advertisementRepository.findAll();
-        List<Category> categories = categoryRepository.findAll();
-        List<User> users = userRepository.findAll();
-        List<String> cats = (List<String>) model.getAttribute("category");
-        logger.debug("wypisz coś");
-        model.addAttribute("adverts", adverts);
-        model.addAttribute("categories", categories);
-        return "bootstrap";
-    }
-
     @RequestMapping("/search")
     public String showSearchedContent(@RequestParam String value, Model model){
         List<Advertisement> adverts = advertisementRepository.findByContent(value);
         model.addAttribute("adverts",adverts);
         return "searchPage";
     }
-
-
 }

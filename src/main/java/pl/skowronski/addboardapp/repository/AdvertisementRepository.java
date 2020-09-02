@@ -1,8 +1,9 @@
-package pl.skowronski.addboardapp.advertisement;
+package pl.skowronski.addboardapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import pl.skowronski.addboardapp.user.User;
+import pl.skowronski.addboardapp.model.Advertisement;
+import pl.skowronski.addboardapp.model.User;
 
 import java.util.List;
 

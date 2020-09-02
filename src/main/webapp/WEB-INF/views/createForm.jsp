@@ -52,7 +52,7 @@
                                 <form:errors path="description"/><br>
                             </div>
                             <div class="form-group">
-                                <form:input path="price" type="text" class="form-control form-control-user"
+                                <form:input path="price" type="text" pattern="([0-9]+\.[0-9]{2})|([0-9]+)|([0-9]+\.[0-9])" title="Wprowadź liczbę, jako separator użyj kropki" class="form-control form-control-user"
                                             placeholder="Cena"/>
                                 <form:errors path="price"/><br>
                             </div>

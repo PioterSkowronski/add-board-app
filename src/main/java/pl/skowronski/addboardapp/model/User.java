@@ -1,8 +1,7 @@
-package pl.skowronski.addboardapp.user;
+package pl.skowronski.addboardapp.model;
 
 
 import org.hibernate.validator.constraints.Length;
-import pl.skowronski.addboardapp.Role.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
