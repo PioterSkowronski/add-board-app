@@ -1,5 +1,6 @@
 package pl.skowronski.addboardapp.advertisement;
 
+import org.aspectj.bridge.IMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,7 @@ public class AdvertisementController {
     }
 
     @GetMapping("/edit")
-    public String editAdd(@RequestParam long id, Model model){
+    public String editAdd(@RequestParam long id, Model model) {
         Advertisement advertisement = advertisementRepository.findById(id).get();
         model.addAttribute("advertisement", advertisement);
         return "editForm";
@@ -77,15 +78,9 @@ public class AdvertisementController {
 
     @GetMapping("/test")
     @ResponseBody
-    public String saveSTH(){
+    public String saveSTH() {
         Advertisement advertisement = new Advertisement();
-        String email;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails) principal).getUsername();
-        } else {
-            email = principal.toString();
-        }
+        String email = advertisementService.getEmailOfLoggedUser();
         User user = userRepository.findByEmail(email).get();
         advertisement.setUser(user);
         Category category = new Category();
@@ -93,31 +88,25 @@ public class AdvertisementController {
         category.setName("Usługi");
         advertisement.setCategory(category);
         advertisement.setPrice(150.25);
-        advertisement.setDescription("Zabawa w chowanego");
+        advertisement.setDescription("fsdfds w chowanego");
         advertisement.setTitle("Sprzedam film z youtube");
         advertisementService.updateAdvertisement(advertisement);
         return advertisement.toString();
     }
 
     @GetMapping("/add/create")
-    public String createAddForm(Model model){
+    public String createAddForm(Model model) {
         model.addAttribute("advertisement", new Advertisement());
         return "createForm";
     }
 
     @PostMapping("/add/create")
-    public String crateAdd(@Valid Advertisement advertisement, BindingResult result, Model model){
+    public String crateAdd(@Valid Advertisement advertisement, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("message", "Popraw błędy w formularzu!");
             return "editForm";
         } else {
-            String email;
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (principal instanceof UserDetails) {
-                email = ((UserDetails) principal).getUsername();
-            } else {
-                email = principal.toString();
-            }
+            String email = advertisementService.getEmailOfLoggedUser();
             User user = userRepository.findByEmail(email).get();
             advertisement.setUser(user);
             model.addAttribute("message", "Dodano ogłoszenie!");
@@ -127,8 +116,21 @@ public class AdvertisementController {
     }
 
     @GetMapping("/delete")
-    public String deleteAdd(@RequestParam long id){
-        advertisementRepository.deleteById(id);
-        return "redirect:/home";
+    public String deleteAdd(@RequestParam long id, Model model) {
+        String email = advertisementService.getEmailOfLoggedUser();
+        User user = userRepository.findByEmail(email).get();
+        if (advertisementRepository.findById(id).isPresent()) {
+            Advertisement advertisement = advertisementRepository.findById(id).get();
+            if (user.getId() != advertisement.getUser().getId()) {
+                model.addAttribute("message", "Nie masz uprawnień, aby usunąć to ogłoszenie!");
+                return "error";
+            } else {
+                advertisementRepository.deleteById(id);
+                model.addAttribute("message", "Ogłoszenie zostało usunięte!");
+                return "redirect:/home";
+            }
+        }
+        model.addAttribute("message", "Ogłoszenie, które chcesz usunąć, nie istnieje!");
+        return "error";
     }
 }

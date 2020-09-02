@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"
            uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -72,11 +71,11 @@
                 <span>Dodaj ogłoszenie</span></a>
         </li>
         <sec:authorize url="/admin">
-        <li class="nav-item">
-            <a class="nav-link" href='<c:url value="/admin"/>'>
-                <i class="fas fa-fw fa-folder"></i>
-                <span>Panel administratora</span></a>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link" href='<c:url value="/admin"/>'>
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Panel administratora</span></a>
+            </li>
         </sec:authorize>
 
 
@@ -180,33 +179,6 @@
             <div class="container-fluid">
 
                 <span><h3>${message}</h3><br></span>
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Twoje ogłoszenia</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>Tytuł</th>
-                                    <th>Cena</th>
-                                    <th>Akcja</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${adverts}" var="advert">
-                                    <tr>
-                                        <td>${advert.title}</td>
-                                        <td>${advert.price} PLN</td>
-                                        <td><a href="/edit?id=${advert.id}">Edytuj</a>   <a href="/delete?id=${advert.id}">Usuń</a> </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
 
 
             </div>
